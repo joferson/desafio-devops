@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: desafio
+spec:
+  selector:
+    matchLabels:
+      name: desafio
+  template:
+    metadata:
+      labels:
+        name: desafio
+    spec:
+      containers:
+        - name: app-desafio
+          image: 06041987/desafio:latest
+          ports:
+            - containerPort: 8000
+      imagePullSecrets:
+        - name: regcred
