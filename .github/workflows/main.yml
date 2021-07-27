@@ -3,7 +3,13 @@ on:
   push:
     branches: [ main ]
 jobs:
-
+if: github.event_name != 'pull_request'
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GHCR_TOKEN }}
+tags: ghcr.io/${{ github.repository_owner }}/simplewhale:latest
   build:
     runs-on: ubuntu-latest
     steps:
@@ -25,7 +31,7 @@ jobs:
         id: docker_build
         uses: docker/build-push-action@v2
         with:
-          context: ./app
+          context: ./
           file: Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/simplewhale:latest
